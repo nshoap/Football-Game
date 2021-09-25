@@ -1,12 +1,7 @@
 #include <cstdio>
 #include <string>
 #include <sstream>
-
-class Player {
-public:
-	Player() : name("Default Player") {}
-	std::string name;		
-};
+#include "Player.h"
 
 int main(int argc, char** argv)
 {
@@ -29,17 +24,14 @@ int main(int argc, char** argv)
 		/* Read in player count */
 		ss >> player_count;
 
+		/* Throw error if input could not be read or if was negative or zero */
 		if (ss.fail() || player_count <= 0) throw std::string("Error: Failed to read in unsigned integer value for roster size");
+
+		/* Dynamically allocate roster */
 		players = new Player[player_count];
 
-		/* Iterate through the dynamically allocated player array and assign names */
-		for (i = 0; i < player_count; ++i)
-		{
-			players[i].name = players[i].name + std::string(" " + std::to_string(i));
-		}
-
 		/* Iterate through the array and print out information */
-		for (i = 0; i < player_count; ++i)
+		for (i = 0; i < static_cast<size_t>(player_count); ++i)
 		{
 			printf("Player: %5s\n", players[i].name.c_str());
 		}
