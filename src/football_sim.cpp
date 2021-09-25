@@ -1,7 +1,13 @@
 #include <cstdio>
 #include <string>
+#include <iostream>
 #include <sstream>
+#include <fstream>
+#include <chrono>
+#include <thread>
 #include "Player.h"
+
+constexpr int TEXT_HESITATION = 50;
 
 int main(int argc, char** argv)
 {
@@ -9,6 +15,8 @@ int main(int argc, char** argv)
 	int player_count;
 	Player* players;
 	std::istringstream ss;
+	std::ifstream fin;
+	std::string str;
 
 	/* Encapsulate program in try/catch for error checking */
 	try {
@@ -30,10 +38,21 @@ int main(int argc, char** argv)
 		/* Dynamically allocate roster */
 		players = new Player[player_count];
 
-		/* Iterate through the array and print out information */
-		for (i = 0; i < static_cast<size_t>(player_count); ++i)
+		/* Open our start menu text; display it char-by-char */
+		/* This prints out the text char-by-char using a wait period defined by the const TEXT_HESITATION. */
+		/* It's cool that you've got this working, but should probably move text-effects to their own function so they can be called with any text. */
+		/* TODO: Move to a specific function, make text hesitation a variable */
+
+		fin.open("txt/welcome.txt");
+		while (std::getline(fin, str))
 		{
-			printf("Player: %5s\n", players[i].name.c_str());
+			for (const char& c : str)
+			{
+				std::cout << c << std::flush;
+				std::this_thread::sleep_for(std::chrono::milliseconds(TEXT_HESITATION));
+		
+			}
+			std::cout << std::endl;
 		}
 
 	} catch (const std::string& e) {
