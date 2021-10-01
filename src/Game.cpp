@@ -10,7 +10,7 @@ void Game::Run()
 	HesitateText(fin, std::cout, 10);
 	fin.close();
 
-	InitTeams();
+	Init();
 
 	do
 	{
@@ -65,7 +65,7 @@ void Game::Run()
 	} while (std::getline(std::cin, input));
 }
 
-void Game::InitTeams()
+void Game::Init()
 {
 	Team* t = nullptr;
 	/* Check if not empty; throw error if teams already exist */
@@ -78,6 +78,39 @@ void Game::InitTeams()
 		t->Setup();
 		teams.push_back(t);
 	}
+}
+
+/* TODO:
+ * Decide how to handle this.
+ * I think it makes sense that the *game* is supposed to create the teams, players, and coaches separately.
+ * Teams should not create coaches or players because they are separate entities.
+ * Teams are composed of coaches and players, but also have different attributes.
+ * Players and Coaches are persons, individuals that exist indep. from the team.
+ * Firstly, we need to implement some sort of save file loading.  That will come later.
+ * For now, we want to generate players and coaches; store their memory address in a vector that stores the global database.
+ * Secondly, we want to generate the amount of teams.  The amount of players and coaches will depend on MAX_TEAMS and will be MAX_TEAMS * MAX_ROSTER plus several hundred more for free agents.
+ * I believe I will setup a draft type situation, teams will select coaches and players from the available pool.
+ */
+
+Team* Game::CreateTeam()
+{
+	Team* team = new Team;
+	team->Setup();
+	return team;
+}
+
+Player* Game::CreatePlayer()
+{
+	Player* player = new Player;
+	player->Setup();
+	return player;
+}
+
+Coach* Game::CreateCoach()
+{
+	Coach* coach = new Coach;
+	coach->Setup();
+	return coach;
 }
 
 void Game::Shutdown()

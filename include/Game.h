@@ -20,14 +20,23 @@
 class Game
 {
 public:
-	void InitTeams();
 	void Run();
 private:
+	/* Member functions */
+	void Init();
 	void Shutdown();
+	Player* CreatePlayer();
+	Coach* CreateCoach();
+	Team* CreateTeam();
+
+	/* Data */
 	std::vector<Team*> teams;
-	std::vector<Player*> player_database;
-	std::vector<Coach*> coach_database;
+	std::vector<Player*> players;
+	std::vector<Coach*> coaches;
+
+	/* Constants */
 	const size_t MAX_TEAM_COUNT = 32;
+	const size_t MAX_ROSTER_SIZE = 53;
 };
 
 #endif
