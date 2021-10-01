@@ -11,3 +11,29 @@ Coach::Coach()
 	} else name = "Retire Already";
 
 }
+
+void Coach::Setup(Team* assigned_team)
+{
+	/* Check if already employed */
+	if (team != nullptr) throw std::string("Attempt to change coach employer using Setup");
+
+	team = assigned_team;
+}
+
+Team* Coach::GetTeam()
+{
+	/* Return team if employed */
+	if (team != nullptr)
+	{
+		return team;
+	}
+
+	throw std::string("Attempt to get unemployed coach's team");
+
+	return nullptr;
+}
+
+std::string Coach::GetName()
+{
+	return name;
+}

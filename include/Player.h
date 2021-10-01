@@ -4,13 +4,19 @@
 
 #include <string>
 
+class Team;
+
 class Player
 {
 public:
 	Player() : name("Default Player " + std::to_string(player_count)) { ++player_count; }
-	std::string name;
+	void Setup(Team* assigned_team);
+	Team* GetTeam();
+	std::string GetName();
 private:
+	std::string name;
 	static size_t player_count;
+	Team* team = nullptr;
 };
 
 #endif
