@@ -14,7 +14,6 @@ public:
 	const std::vector<Player*> GetRoster();
 private:
 	static size_t team_count;
-	const size_t MAX_ROSTER_SIZE = 53;
 	std::string name;
 	std::vector<Player*> roster;
 	Coach* head_coach;

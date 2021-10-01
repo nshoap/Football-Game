@@ -25,14 +25,14 @@ void Game::Run()
 		}
 		else if (input == "COACHES")
 		{
-			for (const auto& c : coach_database)
+			for (const auto& c : coaches)
 			{
 				printf("%s coaches for %s\n", c->GetName().c_str(), c->GetTeam()->GetName().c_str());
 			}
 		}
 		else if (input == "PLAYERS")
 		{
-			for (const auto& p : player_database)
+			for (const auto& p : players)
 			{
 				printf("%s plays for %s\n", p->GetName().c_str(), p->GetTeam()->GetName().c_str());
 			}
@@ -44,7 +44,7 @@ void Game::Run()
 				index = std::stoul(input);
 				if (index < teams.size())
 				{
-					auto roster = teams[index]->GetRoster();
+					const auto& roster = teams[index]->GetRoster();
 					printf("%s\n", teams[index]->GetName().c_str());
 					for (const auto& t : roster)
 					{
@@ -67,16 +67,24 @@ void Game::Run()
 
 void Game::Init()
 {
-	Team* t = nullptr;
 	/* Check if not empty; throw error if teams already exist */
 	if (!teams.empty()) throw std::string("Attempt to re-initialize teams!");
-	
+
+	/* Create players; create extra so free agents exist */
+	while (players.size() != (MAX_TEAM_COUNT * MAX_ROSTER_SIZE * 1.5))
+	{
+		CreatePlayer();
+	}
+
 	/* Create a new team until we reach the number of teams */
 	while (teams.size() != MAX_TEAM_COUNT)
 	{
-		t = new Team;
-		t->Setup();
-		teams.push_back(t);
+		Team* team = CreateTeam();
+		Coach* coach = CreateCoach();
+	
+		team->HireCoach(coach);
+
+		team->FillRoster(free_agents);
 	}
 }
 
@@ -96,20 +104,22 @@ Team* Game::CreateTeam()
 {
 	Team* team = new Team;
 	team->Setup();
+	teams.push_back(team);
 	return team;
 }
 
 Player* Game::CreatePlayer()
 {
 	Player* player = new Player;
-	player->Setup();
+	players.push_back(player);
+	free_agents.push_back(player);
 	return player;
 }
 
 Coach* Game::CreateCoach()
 {
 	Coach* coach = new Coach;
-	coach->Setup();
+	coaches.push_back(coach);
 	return coach;
 }
 
