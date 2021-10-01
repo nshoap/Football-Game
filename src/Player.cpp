@@ -9,6 +9,12 @@ void Player::Setup(Team* assigned_team)
 	team = assigned_team;
 }
 
+bool Player::ViewOffer(const size_t& money)
+{
+	if (money) return true;
+	return true;
+}
+
 Team* Player::GetTeam()
 {
 	if (team != nullptr)

@@ -11,6 +11,7 @@ class Player
 public:
 	Player() : name("Default Player " + std::to_string(player_count)) { ++player_count; }
 	void Setup(Team* assigned_team);
+	bool ViewOffer(const size_t&);
 	Team* GetTeam();
 	std::string GetName();
 private:

@@ -27,14 +27,23 @@ void Game::Run()
 		{
 			for (const auto& c : coaches)
 			{
-				printf("%s coaches for %s\n", c->GetName().c_str(), c->GetTeam()->GetName().c_str());
+				try {
+					printf("%s coaches for %s\n", c->GetName().c_str(), c->GetTeam()->GetName().c_str());
+				} catch (const std::string& e) {
+					printf("%s is unemployed.\n", c->GetName().c_str());
+				}
 			}
 		}
 		else if (input == "PLAYERS")
 		{
 			for (const auto& p : players)
 			{
-				printf("%s plays for %s\n", p->GetName().c_str(), p->GetTeam()->GetName().c_str());
+				try {
+					printf("%s plays for %s\n", p->GetName().c_str(), p->GetTeam()->GetName().c_str());
+				} catch (const std::string& e)
+				{
+					printf("%s is unemployed.\n", p->GetName().c_str());
+				}
 			}
 		}
 		else if (input == "GET_TEAM")

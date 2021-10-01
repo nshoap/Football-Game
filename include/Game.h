@@ -32,11 +32,14 @@ private:
 	/* Data */
 	std::vector<Team*> teams;
 	std::vector<Player*> players;
+	std::vector<Player*> free_agents;
 	std::vector<Coach*> coaches;
 
 	/* Constants */
 	const size_t MAX_TEAM_COUNT = 32;
 	const size_t MAX_ROSTER_SIZE = 53;
+
+	friend void Team::FillRoster(std::vector<Player*>&);
 };
 
 #endif
